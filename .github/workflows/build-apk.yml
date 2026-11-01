@@ -2,7 +2,11 @@ name: Build APK
 
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -40,7 +44,9 @@ jobs:
           key: buildozer-${{ hashFiles('buildozer.spec') }}
 
       - name: Build APK
-        run: buildozer -v android debug
+        run: |
+          set -o pipefail
+          buildozer -v android debug 2>&1 | tee build.log
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -48,3 +54,16 @@ jobs:
           name: NEXUS-Calendar-apk
           path: bin/*.apk
           if-no-files-found: error
+
+      - name: Save build log to branch build-log
+        if: always()
+        run: |
+          mkdir -p /tmp/logout
+          tail -n 250 build.log > /tmp/logout/build-log.txt || echo "no log" > /tmp/logout/build-log.txt
+          cd /tmp/logout
+          git init -q
+          git config user.email "ci@nexus.local"
+          git config user.name "ci"
+          git add build-log.txt
+          git commit -qm "build log"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:refs/heads/build-log
