@@ -55,6 +55,13 @@ jobs:
           path: bin/*.apk
           if-no-files-found: error
 
+      - name: Publish APK as GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete latest -y --cleanup-tag || true
+          gh release create latest bin/*.apk --title "NEXUS Calendar APK (latest)" --notes "Debug-сборка. Скачайте файл .apk и установите на телефон."
+
       - name: Save build log to branch build-log
         if: always()
         run: |
