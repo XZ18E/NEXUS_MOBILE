@@ -42,6 +42,16 @@ def test_recurrence():
     assert len(expand_event(ev, date(2026, 10, 1), date(2026, 10, 31))) == 5
 
 
+def test_yearly():
+    ev = Event("ДР", datetime(2020, 2, 29), datetime(2020, 2, 29, 23, 59), all_day=True, recurrence="yearly")
+    got = expand_event(ev, date(2027, 1, 1), date(2028, 12, 31))
+    assert [o.start.date() for o in got] == [date(2027, 2, 28), date(2028, 2, 29)], got
+    ev = Event("Годовщина", datetime(2015, 11, 5, 19), datetime(2015, 11, 5, 21), recurrence="yearly",
+               recurrence_until=date(2026, 12, 31))
+    assert [o.start.year for o in expand_event(ev, date(2026, 1, 1), date(2030, 12, 31))] == [2026]
+    assert expand_event(ev, date(2026, 1, 1), date(2026, 10, 31)) == []
+
+
 def test_multiday_and_midnight():
     ev = Event("Поездка", datetime(2026, 10, 10), datetime(2026, 10, 12, 23, 59), all_day=True)
     assert len(expand_event(ev, date(2026, 10, 11), date(2026, 10, 11))) == 1

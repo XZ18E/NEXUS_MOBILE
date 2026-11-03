@@ -3,7 +3,9 @@ from __future__ import annotations
 
 from datetime import date, time, timedelta
 
-from kivy.graphics import Color, Ellipse, Line, RoundedRectangle
+from kivy.animation import Animation
+from kivy.graphics import Color, Ellipse, Line, PopMatrix, PushMatrix, RoundedRectangle, Translate
+from kivy.properties import NumericProperty
 from kivy.metrics import dp, sp
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
@@ -60,8 +62,15 @@ class DayCell(ButtonBehavior, FloatLayout):
 class MonthGrid(BoxLayout):
     """Шапка дней недели + 6 строк по 7 дней. Поддерживает свайп влево/вправо."""
 
+    slide = NumericProperty(0)
+
     def __init__(self, on_select, on_swipe=None, cell_h: float = 50, **kw):
         super().__init__(orientation="vertical", size_hint_y=None, height=dp(24) + 6 * dp(cell_h), **kw)
+        with self.canvas.before:
+            PushMatrix()
+            self._tr = Translate()
+        with self.canvas.after:
+            PopMatrix()
         self.on_select, self.on_swipe, self.cell_h = on_select, on_swipe, cell_h
         self._down = None
         self.head = GridLayout(cols=7, size_hint_y=None, height=dp(24))
@@ -87,6 +96,15 @@ class MonthGrid(BoxLayout):
             cell.bind(on_release=lambda c: self.on_select(c.date))
             self.grid.add_widget(cell)
         self.first_visible, self.last_visible = start, start + timedelta(days=41)
+
+    def on_slide(self, _inst, value):
+        self._tr.x = value
+
+    def animate_in(self, direction: int) -> None:
+        """Сетка «выезжает» со стороны, куда листаем."""
+        Animation.cancel_all(self)
+        self.opacity, self.slide = 0, direction * dp(70)
+        Animation(slide=0, opacity=1, d=.3, t="out_cubic").start(self)
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):

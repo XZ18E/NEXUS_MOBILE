@@ -17,8 +17,8 @@ from kivy.utils import get_color_from_hex as hx
 from models import (CATEGORIES, EVENT_FORMS, MONTHS_NOM, MONTHS_SHORT, PRIORITY_COLORS, PRIORITY_NAMES,
                     REMINDER_OPTIONS, TASK_FORMS, Event, Task, count_text, fmt_date_long, fmt_date_short,
                     fmt_occurrence_time, month_title, relative_day, add_months)
-from ui_kit import (Btn, Card, ChoiceGrid, Dot, Field, Icon, IconBtn, Lbl, Spacer, fade_in, theme, vbox, with_alpha,
-                    message)
+from ui_kit import (Btn, Card, ChoiceGrid, Dot, Field, Icon, IconBtn, Lbl, Spacer, fade_in, stagger, theme, vbox,
+                    with_alpha, message)
 from pickers import MonthGrid
 
 
@@ -168,7 +168,7 @@ class CalendarScreen(BoxLayout):
         self.panel.add_widget(self.scroll)
         self.add_widget(self.panel)
 
-    def refresh(self) -> None:
+    def refresh(self, direction: int = 0) -> None:
         app, sel = self.app, self.app.selected
         self.title.text = month_title(sel.year, sel.month)
         first = date(sel.year, sel.month, 1)
@@ -183,6 +183,8 @@ class CalendarScreen(BoxLayout):
                     lst.append(o.event.display_color)
                 d += timedelta(days=1)
         self.grid.set(sel.year, sel.month, sel, app.first_weekday, dots, app.db.pending_task_counts(start, end))
+        if direction:
+            self.grid.animate_in(direction)
         self._day_panel()
 
     def _day_panel(self) -> None:
@@ -208,12 +210,16 @@ class CalendarScreen(BoxLayout):
             c.add_widget(empty_state("calendar", "Свободный день", "На этот день ничего не запланировано.\n"
                                      "Нажмите «+», чтобы добавить событие."))
             return
+        cards = []
         for o in events:
-            c.add_widget(EventCard(app, o))
+            cards.append(EventCard(app, o))
+            c.add_widget(cards[-1])
         if tasks:
             c.add_widget(Lbl("ЗАДАЧИ", 11, "faint", bold=True, size_hint_y=None, height=dp(22)))
             for t in tasks:
-                c.add_widget(TaskRow(app, t))
+                cards.append(TaskRow(app, t))
+                c.add_widget(cards[-1])
+        stagger(cards)
 
 
 # ======================================================================= задачи
@@ -294,8 +300,10 @@ class TasksScreen(ScrollPage):
             self.list.add_widget(empty_state("tasks", "Задач нет" if not total else "Ничего не найдено",
                                              "Добавьте первую задачу кнопкой «+»." if not total
                                              else "Измените фильтры, чтобы увидеть другие задачи."))
-        for t in shown:
-            self.list.add_widget(TaskRow(self.app, t))
+        rows = [TaskRow(self.app, t) for t in shown]
+        for r in rows:
+            self.list.add_widget(r)
+        stagger(rows, .03)
 
 
 # ==================================================================== статистика

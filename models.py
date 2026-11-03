@@ -28,6 +28,7 @@ RECURRENCE_OPTIONS = [
     ("daily", "Каждый день"),
     ("weekly", "Каждую неделю"),
     ("monthly", "Каждый месяц"),
+    ("yearly", "Каждый год"),
 ]
 RECURRENCE_NAMES = dict(RECURRENCE_OPTIONS)
 
@@ -68,7 +69,7 @@ class Event:
     color: str = ""                     # "" -> цвет берётся из категории
     location: str = ""
     reminder: int = -1                  # минуты до начала, -1 = без напоминания
-    recurrence: str = "none"            # none | daily | weekly | monthly
+    recurrence: str = "none"            # none | daily | weekly | monthly | yearly
     recurrence_until: date | None = None
     id: int | None = None
 
@@ -170,6 +171,16 @@ def expand_event(ev: Event, range_start: date, range_end: date) -> list[Occurren
         while guard < 2000:
             guard += 1
             start = add_months(ev.start, n)
+            if start.date() > range_end or (until and start.date() > until):
+                break
+            add(start)
+            n += 1
+    elif ev.recurrence == "yearly":
+        # 29 февраля в невисокосные годы переносится на 28 февраля (add_months обрезает день)
+        n = max(0, range_start.year - ev.start.year - (duration.days // 365) - 1)
+        while guard < 500:
+            guard += 1
+            start = add_months(ev.start, 12 * n)
             if start.date() > range_end or (until and start.date() > until):
                 break
             add(start)

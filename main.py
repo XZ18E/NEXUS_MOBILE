@@ -14,6 +14,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics import Color, Ellipse, Line
 from kivy.metrics import dp
+from kivy.properties import NumericProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -21,13 +22,15 @@ from kivy.uix.widget import Widget
 from kivy.utils import platform
 
 from database import Database
+from assistant_screen import AssistantScreen
 from editors import EventEditor, TaskEditor
+import widget_sync
 from models import Event, Task, add_months, validate_event
 from screens import CalendarScreen, SettingsScreen, StatsScreen, TasksScreen
 from ui_kit import Card, Icon, Lbl, Sheet, confirm, fade_in, message, theme, with_alpha
 
-TABS = [("calendar", "Календарь", "calendar"), ("tasks", "Задачи", "tasks"),
-        ("stats", "Статистика", "stats"), ("settings", "Настройки", "gear")]
+TABS = [("calendar", "Календарь", "calendar"), ("tasks", "Задачи", "tasks"), ("assistant", "Помощник", "sparkle"),
+        ("stats", "Статистика", "stats"), ("settings", "Ещё", "gear")]
 
 
 class NavItem(ButtonBehavior, BoxLayout):
@@ -45,19 +48,28 @@ class NavItem(ButtonBehavior, BoxLayout):
 
 
 class Fab(ButtonBehavior, Widget):
+    scale = NumericProperty(1.0)
+
+    def pulse(self) -> None:
+        Animation.cancel_all(self, "scale")
+        Animation(scale=1.18, d=.12, t="out_quad").start(self)
+        Clock.schedule_once(lambda dt: Animation(scale=1.0, d=.35, t="out_elastic").start(self), .12)
+
     def __init__(self, **kw):
         super().__init__(size_hint=(None, None), size=(dp(60), dp(60)), **kw)
         self.icon = Icon("plus", (1, 1, 1, 1), 28)
         self.add_widget(self.icon)
-        self.bind(pos=self._draw, size=self._draw, state=self._draw)
+        self.bind(pos=self._draw, size=self._draw, state=self._draw, scale=self._draw)
 
     def _draw(self, *_):
         self.canvas.before.clear()
         with self.canvas.before:
+            w, h = self.width * self.scale, self.height * self.scale
+            x, y = self.center_x - w / 2, self.center_y - h / 2
             Color(0, 0, 0, .28)
-            Ellipse(pos=(self.x - dp(1), self.y - dp(4)), size=(self.width + dp(2), self.height + dp(2)))
+            Ellipse(pos=(x - dp(1), y - dp(4)), size=(w + dp(2), h + dp(2)))
             Color(*theme.c("accent2") if self.state == "down" else theme.c("accent"))
-            Ellipse(pos=self.pos, size=self.size)
+            Ellipse(pos=(x, y), size=(w, h))
         self.icon.center = self.center
 
 
@@ -85,7 +97,11 @@ class NexusApp(App):
             self._request_android_permissions()
         return self.root_box
 
+    def on_resume(self):
+        widget_sync.sync(self)
+
     def on_pause(self):
+        widget_sync.sync(self)
         return True          # не закрывать приложение при сворачивании — напоминания продолжают работать
 
     def on_stop(self):
@@ -118,7 +134,8 @@ class NexusApp(App):
 
     def _page(self, key: str):
         if key not in self.pages:
-            cls = {"calendar": CalendarScreen, "tasks": TasksScreen, "stats": StatsScreen, "settings": SettingsScreen}[key]
+            cls = {"calendar": CalendarScreen, "tasks": TasksScreen, "assistant": AssistantScreen, "stats": StatsScreen,
+                   "settings": SettingsScreen}[key]
             self.pages[key] = cls(self)
         return self.pages[key]
 
@@ -133,10 +150,13 @@ class NexusApp(App):
         self.fab.opacity = 1 if key in ("calendar", "tasks") else 0
         self.fab.disabled = key not in ("calendar", "tasks")
         self._place_fab()
+        if key in ("calendar", "tasks"):
+            self.fab.pulse()
         if animate:
             fade_in(page, .22)
 
     def refresh(self) -> None:
+        widget_sync.sync(self)
         for key, page in self.pages.items():
             if key == self.tab or key in ("calendar", "tasks"):
                 page.refresh()
@@ -159,13 +179,21 @@ class NexusApp(App):
                 else now.replace(hour=23, minute=0, second=0, microsecond=0)
         return datetime.combine(day, datetime.min.time()).replace(hour=9)
 
-    def select(self, d: date) -> None:
+    def select(self, d: date, direction: int = 0) -> None:
+        old = self.selected
+        if not direction and (d.year, d.month) != (old.year, old.month):
+            direction = 1 if d > old else -1
         self.selected = d
         if "calendar" in self.pages:
-            self.pages["calendar"].refresh()
+            self.pages["calendar"].refresh(direction)
+
+    def open_day(self, d: date) -> None:
+        """Из помощника: открыть календарь на нужном дне."""
+        self.selected = d
+        self.goto("calendar")
 
     def shift_month(self, step: int) -> None:
-        self.select(add_months(self.selected, step))
+        self.select(add_months(self.selected, step), step)
 
     def occurrences(self, start: date, end: date):
         try:

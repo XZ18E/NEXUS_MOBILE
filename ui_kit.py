@@ -223,6 +223,14 @@ class Icon(Widget):
                 cx, cy = P(12, 9.5)
                 Line(circle=(cx, cy, 6 * s), width=w)
                 Line(points=pts((8, 14), (12, 21), (16, 14)), width=w, cap="round", joint="round")
+            elif n == "sparkle":
+                cx, cy = P(12, 12)
+                Line(points=pts((12, 3), (14, 10), (21, 12), (14, 14), (12, 21), (10, 14), (3, 12), (10, 10), (12, 3)),
+                     width=w, joint="round", cap="round")
+                Line(points=pts((19, 3.5), (19, 7)), width=w, cap="round")
+                Line(points=pts((17.2, 5.2), (20.8, 5.2)), width=w, cap="round")
+            elif n == "send":
+                Line(points=pts((4, 12), (20, 4), (14, 20), (11.5, 13), (4, 12)), width=w, joint="round", cap="round")
             elif n == "repeat":
                 cx, cy = P(12, 12)
                 Line(circle=(cx, cy, 7 * s, 90, 360 + 0), width=w)
@@ -258,6 +266,15 @@ def vbox(spacing: float = 10, padding=0, **kw) -> BoxLayout:
     b = BoxLayout(orientation="vertical", spacing=dp(spacing), size_hint_y=None, padding=padding, **kw)
     b.bind(minimum_height=b.setter("height"))
     return b
+
+
+def stagger(widgets, step: float = .04, d: float = .26, max_items: int = 14) -> None:
+    """Плавное поочерёдное появление элементов списка."""
+    from kivy.clock import Clock
+    for i, w in enumerate(widgets):
+        w.opacity = 0
+        delay = step * min(i, max_items)
+        Clock.schedule_once(lambda dt, w=w: Animation(opacity=1, d=d, t="out_quad").start(w), delay)
 
 
 def fade_in(widget, d: float = .25) -> None:
@@ -317,6 +334,8 @@ class Sheet(ModalView):
 
     def on_open(self):
         Sheet.stack.append(self)
+        self.opacity = 0
+        Animation(opacity=1, d=.22, t="out_quad").start(self)
 
     def on_dismiss(self):
         if self in Sheet.stack:
