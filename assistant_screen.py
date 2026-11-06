@@ -65,7 +65,7 @@ class AssistantScreen(BoxLayout):
 
         bar = BoxLayout(size_hint_y=None, height=dp(52), spacing=dp(8))
         self.input = Field("Напишите, что сделать…")
-        self.input.bind(on_text_validate=lambda *_: self.send(self.input.text))
+        self.input.bind(on_text_validate=lambda *_: self._send_from_input())
         self.input.size_hint_y = 1
         send = IconBtn("send", (1, 1, 1, 1), 52, 22)
         with send.canvas.before:
@@ -73,10 +73,16 @@ class AssistantScreen(BoxLayout):
             Color(*theme.c("accent"))
             self._circle = Ellipse(pos=send.pos, size=send.size)
         send.bind(pos=lambda w, p: setattr(self._circle, "pos", p), size=lambda w, s: setattr(self._circle, "size", s))
-        send.bind(on_release=lambda *_: self.send(self.input.text))
+        send.bind(on_press=lambda *_: self._send_from_input())   # on_press: окно меняет размер, когда прячется клавиатура
         bar.add_widget(self.input)
         bar.add_widget(send)
         self.add_widget(bar)
+
+    def _send_from_input(self) -> None:
+        text = self.input.text
+        self.send(text)
+        # клавиатура остаётся открытой — можно сразу писать следующее сообщение
+        Clock.schedule_once(lambda dt: setattr(self.input, "focus", True), .05)
 
     def refresh(self) -> None:
         if not self._welcomed:

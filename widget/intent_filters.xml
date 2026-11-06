@@ -5,4 +5,28 @@
     </intent-filter>
     <meta-data android:name="android.appwidget.provider" android:resource="@xml/nexus_widget_info" />
 </receiver>
+<receiver android:name="org.nexus.nexuscalendar.NexusWidgetSmall" android:exported="true" android:label="NEXUS: Маленький">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data android:name="android.appwidget.provider" android:resource="@xml/nexus_small_info" />
+</receiver>
+<receiver android:name="org.nexus.nexuscalendar.NexusWidgetAgenda" android:exported="true" android:label="NEXUS: Неделя">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data android:name="android.appwidget.provider" android:resource="@xml/nexus_agenda_info" />
+</receiver>
+<receiver android:name="org.nexus.nexuscalendar.NexusWidgetTasks" android:exported="true" android:label="NEXUS: Задачи">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data android:name="android.appwidget.provider" android:resource="@xml/nexus_tasks_info" />
+</receiver>
+<receiver android:name="org.nexus.nexuscalendar.NexusWidgetMonth" android:exported="true" android:label="NEXUS: Месяц">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data android:name="android.appwidget.provider" android:resource="@xml/nexus_month_info" />
+</receiver>
 <activity android:name="org.nexus.nexuscalendar.NexusUnusedActivity" android:exported="false">

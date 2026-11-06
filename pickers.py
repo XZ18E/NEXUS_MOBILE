@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import date, time, timedelta
 
 from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.graphics import Color, Ellipse, Line, PopMatrix, PushMatrix, RoundedRectangle, Translate
 from kivy.properties import NumericProperty
 from kivy.metrics import dp, sp
@@ -12,6 +13,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
+from kivy.uix.stencilview import StencilView
 
 from models import MONTHS_NOM, WEEKDAYS_SHORT, add_months
 from ui_kit import Btn, ChoiceGrid, IconBtn, Lbl, Sheet, theme, with_alpha
@@ -24,7 +26,7 @@ class DayCell(ButtonBehavior, FloatLayout):
         self.date = d
         self.num = Label(text=str(d.day), font_size=sp(15), bold=today or selected,
                          color=(1, 1, 1, 1) if today else theme.c("text" if in_month else "faint"),
-                         size_hint=(1, .62), pos_hint={"x": 0, "top": 1})
+                         size_hint=(1, None), height=dp(40), pos_hint={"x": 0, "top": 1})
         self.add_widget(self.num)
         self._state = (in_month, today, selected, colors[:3], pending)
         self.bind(pos=self._draw, size=self._draw)
@@ -44,7 +46,8 @@ class DayCell(ButtonBehavior, FloatLayout):
             if today:
                 d = dp(30)
                 Color(*theme.c("accent"))
-                Ellipse(pos=(self.center_x - d / 2, self.y + self.height * .8 - d / 2), size=(d, d))
+                # центр кружка совпадает с центром подписи с числом (верх ячейки минус половина высоты подписи)
+                Ellipse(pos=(self.center_x - d / 2, self.top - dp(20) - d / 2), size=(d, d))
             n = len(colors) + (1 if pending else 0)
             if n:
                 r, gap = dp(2.6), dp(4)
@@ -180,3 +183,64 @@ class TimePicker(Sheet):
 
     def _set_min(self, m):
         self.minute = m
+
+
+class MonthPager(StencilView):
+    """Две сетки месяца едут рядом: старая уезжает, новая заезжает (как в системных календарях)."""
+
+    def __init__(self, make_grid, cell_h: float = 50, **kw):
+        super().__init__(size_hint_y=None, height=dp(24) + 6 * dp(cell_h), **kw)
+        self.make_grid = make_grid
+        self.current: MonthGrid | None = None
+        self._old: MonthGrid | None = None
+        self.bind(pos=self._relayout, size=self._relayout)
+
+    def _relayout(self, *_):
+        for g in (self.current,):
+            if g is not None and not self._old:
+                g.size = self.size
+                g.pos = self.pos
+
+    def _finish(self) -> None:
+        """Мгновенно завершает идущую анимацию."""
+        if self._old is not None:
+            Animation.cancel_all(self._old)
+            self.remove_widget(self._old)
+            self._old = None
+        if self.current is not None:
+            Animation.cancel_all(self.current)
+            self.current.opacity = 1
+            self.current.size, self.current.pos = self.size, self.pos
+
+    def show(self, year: int, month: int, direction: int = 0) -> None:
+        self._finish()
+        grid = self.make_grid(year, month)
+        grid.size_hint = (None, None)
+        grid.size = self.size
+        if self.current is None or direction == 0 or self.width < 10:
+            if self.current is not None:
+                self.remove_widget(self.current)
+            grid.pos = self.pos
+            self.add_widget(grid)
+            self.current = grid
+            return
+        old, self._old = self.current, self.current
+        grid.pos = (self.x + direction * self.width, self.y)
+        grid.opacity = .0
+        self.add_widget(grid)
+        self.current = grid
+        w = self.width
+
+        def go(dt):
+            t = "in_out_cubic"
+            Animation(x=self.x - direction * w * .6, opacity=0, d=.40, t=t).start(old)
+            a = Animation(x=self.x, opacity=1, d=.40, t=t)
+            a.bind(on_complete=lambda *_: self._done(old))
+            a.start(grid)
+        Clock.schedule_once(go, 0)      # анимация стартует со следующего кадра, когда сетка уже построена
+
+    def _done(self, old) -> None:
+        if self._old is old:
+            self.remove_widget(old)
+            self._old = None
+            self.current.pos, self.current.size = self.pos, self.size

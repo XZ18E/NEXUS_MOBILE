@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 
 from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.graphics import Color, Ellipse, Line, RoundedRectangle
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
@@ -17,12 +18,50 @@ from kivy.utils import get_color_from_hex as hx
 from models import (CATEGORIES, EVENT_FORMS, MONTHS_NOM, MONTHS_SHORT, PRIORITY_COLORS, PRIORITY_NAMES,
                     REMINDER_OPTIONS, TASK_FORMS, Event, Task, count_text, fmt_date_long, fmt_date_short,
                     fmt_occurrence_time, month_title, relative_day, add_months)
-from ui_kit import (Btn, Card, ChoiceGrid, Dot, Field, Icon, IconBtn, Lbl, Spacer, fade_in, stagger, theme, vbox,
+from ui_kit import (PALETTES, THEME_NAMES, Btn, Card, ChoiceGrid, Dot, Field, Icon, IconBtn, Lbl, Spacer, fade_in, stagger, theme, vbox,
                     with_alpha, message)
-from pickers import MonthGrid
+from pickers import MonthGrid, MonthPager
 
 
 # =============================================================== общие карточки
+
+class ThemeCard(ButtonBehavior, Widget):
+    """Карточка выбора темы: рисует мини-предпросмотр палитры."""
+
+    def __init__(self, key: str, selected: bool, **kw):
+        super().__init__(size_hint_y=None, height=dp(86), **kw)
+        self.key, self.selected = key, selected
+        self.bind(pos=self._draw, size=self._draw)
+        from kivy.uix.label import Label
+        self.lbl = Label(text=THEME_NAMES[key], font_size=dp(13), bold=True, size_hint=(None, None),
+                         color=hx(PALETTES[key]["text"]))
+        self.add_widget(self.lbl)
+        self._draw()
+
+    def _draw(self, *_):
+        pal = PALETTES[self.key]
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Color(*hx(pal["bg"]))
+            RoundedRectangle(pos=self.pos, size=self.size, radius=[dp(16)])
+            Color(*hx(pal["surface2"]))
+            RoundedRectangle(pos=(self.x + dp(10), self.y + dp(30)), size=(self.width - dp(20), dp(16)), radius=[dp(8)])
+            Color(*hx(pal["accent"]))
+            RoundedRectangle(pos=(self.x + dp(10), self.y + dp(30)), size=((self.width - dp(20)) * .55, dp(16)),
+                             radius=[dp(8)])
+            for i, k in enumerate(("accent", "accent2", "success", "warning")):
+                Color(*hx(pal[k]))
+                Ellipse(pos=(self.x + dp(10) + i * dp(17), self.y + dp(10)), size=(dp(12), dp(12)))
+            if self.selected:
+                Color(*theme.c("accent"))
+                Line(rounded_rectangle=(self.x + dp(1), self.y + dp(1), self.width - dp(2), self.height - dp(2),
+                                        dp(16)), width=dp(2.2))
+            else:
+                Color(*hx(pal["border"]))
+                Line(rounded_rectangle=(self.x, self.y, self.width, self.height, dp(16)), width=1)
+        self.lbl.size = self.lbl.texture_size
+        self.lbl.pos = (self.x + dp(12), self.top - dp(26))
+
 
 class CheckCircle(ButtonBehavior, Widget):
     def __init__(self, checked: bool, color: str, **kw):
@@ -158,8 +197,8 @@ class CalendarScreen(BoxLayout):
         head.add_widget(right)
         self.add_widget(head)
 
-        self.grid = MonthGrid(app.select, app.shift_month, cell_h=48)
-        self.add_widget(self.grid)
+        self.pager = MonthPager(self._make_grid, cell_h=48)
+        self.add_widget(self.pager)
 
         self.panel = Card(fill="surface", radius=22, orientation="vertical", padding=[0, dp(8), 0, 0])
         self.scroll = ScrollView(do_scroll_x=False, bar_width=dp(3))
@@ -168,10 +207,10 @@ class CalendarScreen(BoxLayout):
         self.panel.add_widget(self.scroll)
         self.add_widget(self.panel)
 
-    def refresh(self, direction: int = 0) -> None:
+    def _make_grid(self, year: int, month: int) -> MonthGrid:
+        """Собирает сетку месяца с точками событий и значками задач."""
         app, sel = self.app, self.app.selected
-        self.title.text = month_title(sel.year, sel.month)
-        first = date(sel.year, sel.month, 1)
+        first = date(year, month, 1)
         start = first - timedelta(days=(first.weekday() - app.first_weekday) % 7)
         end = start + timedelta(days=41)
         dots: dict[date, list[str]] = {}
@@ -182,9 +221,25 @@ class CalendarScreen(BoxLayout):
                 if o.event.display_color not in lst:
                     lst.append(o.event.display_color)
                 d += timedelta(days=1)
-        self.grid.set(sel.year, sel.month, sel, app.first_weekday, dots, app.db.pending_task_counts(start, end))
+        grid = MonthGrid(self._pick_date, app.shift_month, cell_h=48)
+        grid.set(year, month, sel, app.first_weekday, dots, app.db.pending_task_counts(start, end))
+        return grid
+
+    def _pick_date(self, d: date) -> None:
+        self.app.select(d)
+
+    def refresh(self, direction: int = 0) -> None:
+        sel = self.app.selected
+        self.title.text = month_title(sel.year, sel.month)
+        self.pager.show(sel.year, sel.month, direction)
         if direction:
-            self.grid.animate_in(direction)
+            # тяжёлую перерисовку списка дня откладываем, чтобы анимация месяца шла без рывков
+            Clock.unschedule(self._delayed_panel)
+            Clock.schedule_once(self._delayed_panel, .12)
+        else:
+            self._day_panel()
+
+    def _delayed_panel(self, dt) -> None:
         self._day_panel()
 
     def _day_panel(self) -> None:
@@ -452,8 +507,14 @@ class SettingsScreen(ScrollPage):
             c.add_widget(card)
             return card
 
-        s = section("Внешний вид")
-        s.add_widget(ChoiceGrid([("dark", "Тёмная"), ("light", "Светлая")], theme.name, 2, app.set_theme))
+        s = section("Тема оформления")
+        grid = GridLayout(cols=2, spacing=dp(10), size_hint_y=None)
+        grid.bind(minimum_height=grid.setter("height"))
+        for key in PALETTES:
+            card = ThemeCard(key, key == theme.name)
+            card.bind(on_release=lambda w: app.set_theme(w.key))
+            grid.add_widget(card)
+        s.add_widget(grid)
 
         s = section("Календарь")
         s.add_widget(Lbl("Первый день недели", 14, size_hint_y=None, height=dp(22)))

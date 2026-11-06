@@ -23,7 +23,29 @@ PALETTES = {
     "light": dict(bg="#EEF1F9", surface="#FFFFFF", surface2="#F0F2FA", border="#D9DEEE", text="#1A1D2B",
                   muted="#5A617C", faint="#9299B1", accent="#3B76F0", accent2="#7C3AED", danger="#E11D48",
                   success="#16A34A", warning="#D97706"),
+    "amoled": dict(bg="#000000", surface="#0D0D11", surface2="#18181F", border="#2A2A34", text="#F2F2F7",
+                   muted="#9A9AA8", faint="#5E5E6C", accent="#00E5A8", accent2="#00B8FF", danger="#FF4D6D",
+                   success="#3DDC84", warning="#FFB020"),
+    "ocean": dict(bg="#08131D", surface="#0E2233", surface2="#143049", border="#1F4663", text="#E6F3FF",
+                  muted="#8FB3D1", faint="#5A7E9C", accent="#22D3EE", accent2="#3B82F6", danger="#FB7185",
+                  success="#34D399", warning="#FBBF24"),
+    "sunset": dict(bg="#190F1F", surface="#26162E", surface2="#331F3D", border="#4B2E57", text="#FFEFF5",
+                   muted="#C9A5BC", faint="#86647A", accent="#FF7A59", accent2="#FF3D81", danger="#FF5470",
+                   success="#4ADE80", warning="#FFC857"),
+    "forest": dict(bg="#0B1510", surface="#13231A", surface2="#1B3225", border="#2B4B3A", text="#E8F5EC",
+                   muted="#93B8A1", faint="#5F8570", accent="#4ADE80", accent2="#A3E635", danger="#F87171",
+                   success="#22C55E", warning="#FACC15"),
+    "rose": dict(bg="#FFF0F5", surface="#FFFFFF", surface2="#FFE3EC", border="#F4C5D6", text="#3A1824",
+                 muted="#8A5468", faint="#C08BA0", accent="#E11D74", accent2="#A855F7", danger="#DC2626",
+                 success="#16A34A", warning="#D97706"),
+    "sky": dict(bg="#E8F3FF", surface="#FFFFFF", surface2="#E0EDFB", border="#C3D9F0", text="#0F2740",
+                muted="#4F6D8C", faint="#8FA9C4", accent="#0EA5E9", accent2="#6366F1", danger="#E11D48",
+                success="#16A34A", warning="#D97706"),
 }
+
+THEME_NAMES = {"dark": "Полночь", "light": "Светлая", "amoled": "Графит", "ocean": "Океан", "sunset": "Закат",
+               "forest": "Лес", "rose": "Сакура", "sky": "Небо"}
+LIGHT_THEMES = {"light", "rose", "sky"}
 
 
 class Theme:
@@ -32,6 +54,7 @@ class Theme:
 
     def apply(self, name: str) -> None:
         self.name = name if name in PALETTES else "dark"
+        self.is_light = self.name in LIGHT_THEMES
         for k, v in PALETTES[self.name].items():
             setattr(self, k, hx(v))
 
@@ -238,7 +261,7 @@ class Icon(Widget):
 
 class IconBtn(ButtonBehavior, Widget):
     def __init__(self, icon: str, color="muted", box: float = 44, glyph: float = 22, **kw):
-        super().__init__(size_hint=(None, None), size=(dp(box), dp(box)), **kw)
+        super().__init__(size_hint=(None, None), size=(dp(box), dp(box)), always_release=True, **kw)
         self.icon = Icon(icon, color, glyph)
         self.add_widget(self.icon)
         self.bind(pos=self._place, size=self._place)
@@ -334,6 +357,9 @@ class Sheet(ModalView):
 
     def on_open(self):
         Sheet.stack.append(self)
+        for b in self.footer.children:
+            if isinstance(b, Btn):
+                b.always_release = True
         self.opacity = 0
         Animation(opacity=1, d=.22, t="out_quad").start(self)
 

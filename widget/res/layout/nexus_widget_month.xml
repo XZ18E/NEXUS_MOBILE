@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nx_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/nx_bg_dark">
+
+    <TextView
+        android:id="@+id/nx_mtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_w0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/nx_w6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#A0A6BC"
+                android:textSize="10sp" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c9"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c11"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c12"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c13"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c14"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c16"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c17"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c18"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c19"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c21"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c22"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c23"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c24"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c25"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c26"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c27"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c28"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c29"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c30"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c31"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c32"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c33"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c34"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nx_c35"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c36"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c37"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c38"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c39"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c40"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nx_c41"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:textColor="#E9EBF3"
+                android:textSize="12sp" />
+        </LinearLayout>
+</LinearLayout>
