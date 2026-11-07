@@ -2,75 +2,25 @@ name: Build APK
 
 on:
   push:
-    branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
+concurrency:
+  group: android-build
+  cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - name: Build with Buildozer
+        id: buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          python-version: "3.11"
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Install system packages
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git zip unzip autoconf automake libtool pkg-config \
-            zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev libltdl-dev build-essential
-
-      - name: Install Buildozer
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install buildozer "cython<3.1" virtualenv setuptools
-
-      - name: Cache Buildozer data
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.buildozer
-            .buildozer
-          key: buildozer-${{ hashFiles('buildozer.spec') }}
-
-      - name: Build APK
-        run: |
-          set -o pipefail
-          buildozer -v android debug 2>&1 | tee build.log
-
+          command: buildozer android debug
+          buildozer_version: stable
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: NEXUS-Calendar-apk
-          path: bin/*.apk
-          if-no-files-found: error
-
-      - name: Publish APK as GitHub Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release delete latest -y --cleanup-tag || true
-          gh release create latest bin/*.apk --title "NEXUS Calendar APK (latest)" --notes "Debug-сборка. Скачайте файл .apk и установите на телефон."
-
-      - name: Save build log to branch build-log
-        if: always()
-        run: |
-          mkdir -p /tmp/logout
-          tail -n 250 build.log > /tmp/logout/build-log.txt || echo "no log" > /tmp/logout/build-log.txt
-          cd /tmp/logout
-          git init -q
-          git config user.email "ci@nexus.local"
-          git config user.name "ci"
-          git add build-log.txt
-          git commit -qm "build log"
-          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:refs/heads/build-log
+          path: ${{ steps.buildozer.outputs.filename }}
