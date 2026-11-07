@@ -107,14 +107,24 @@ class NexusApp(App):
     def on_stop(self):
         self.db.close()
 
+    def _insets(self) -> tuple[float, float]:
+        """Отступы сверху/снизу под «вырез» и полосу «домой» на iPhone (у Android система делает это сама)."""
+        if platform != "ios":
+            return 0.0, 0.0
+        tall = Window.height / max(Window.width, 1) > 2.0      # iPhone с вырезом: пропорция экрана ≈ 19,5:9
+        return (dp(34), dp(22)) if tall else (dp(14), 0.0)
+
     def _build_ui(self) -> None:
         self.root_box.clear_widgets()
         self.pages.clear()
         Window.clearcolor = theme.bg
-        col = BoxLayout(orientation="vertical", pos_hint={"x": 0, "y": 0}, size_hint=(1, 1))
+        self.top_inset, self.bottom_inset = self._insets()
+        col = BoxLayout(orientation="vertical", pos_hint={"x": 0, "y": 0}, size_hint=(1, 1),
+                        padding=[0, self.top_inset, 0, 0])
         self.container = BoxLayout()
         col.add_widget(self.container)
-        nav = Card(fill="surface", radius=0, orientation="horizontal", size_hint_y=None, height=dp(64))
+        nav = Card(fill="surface", radius=0, orientation="horizontal", size_hint_y=None,
+                   height=dp(64) + self.bottom_inset, padding=[0, 0, 0, self.bottom_inset])
         self.nav_items = {}
         for key, text, icon in TABS:
             item = NavItem(key, text, icon)
@@ -130,7 +140,7 @@ class NexusApp(App):
         self.goto(self.tab, animate=False)
 
     def _place_fab(self) -> None:
-        self.fab.pos = (Window.width - self.fab.width - dp(18), dp(64) + dp(16))
+        self.fab.pos = (Window.width - self.fab.width - dp(18), dp(64) + self.bottom_inset + dp(16))
 
     def _page(self, key: str):
         if key not in self.pages:
@@ -294,7 +304,8 @@ class NexusApp(App):
                 return
             except Exception:
                 pass
-        message("Готово", f"{text}\nФайл: {source}")
+        hint = ("\nОткройте приложение «Файлы» → «На iPhone» → NEXUS Calendar." if platform == "ios" else "")
+        message("Готово", f"{text}\nФайл: {source}{hint}")
 
     def _android_save_as(self, source: Path, mime: str) -> None:
         from android import activity            # type: ignore
@@ -368,7 +379,7 @@ class NexusApp(App):
         card.add_widget(Lbl(body, 12, "muted", shorten=True, shorten_from="right"))
         card.y = Window.height + dp(10)
         self.root_box.add_widget(card)
-        target = Window.height - dp(96)
+        target = Window.height - dp(96) - getattr(self, "top_inset", 0)
         anim = Animation(y=target, d=.3, t="out_cubic") + Animation(d=6) + Animation(y=Window.height + dp(10), d=.3)
         anim.bind(on_complete=lambda *_: self.root_box.remove_widget(card))
         anim.start(card)

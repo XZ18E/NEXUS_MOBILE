@@ -1,0 +1,95 @@
+name: Build iOS (IPA без подписи)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install tools
+        run: |
+          brew install autoconf automake libtool pkg-config
+          python -m pip install --upgrade pip
+          python -m pip install kivy-ios "cython<3.1" setuptools wheel
+
+      - name: Cache Kivy toolchain
+        uses: actions/cache@v4
+        with:
+          path: ios-toolchain
+          key: kivy-ios-toolchain-v1-${{ hashFiles('.github/workflows/build-ios.yml') }}
+
+      - name: Build Kivy toolchain (only real iPhone, arm64)
+        run: |
+          set -o pipefail
+          mkdir -p ios-toolchain && cd ios-toolchain
+          toolchain build --platform iphoneos-arm64 python3 kivy plyer 2>&1 | tee -a "$GITHUB_WORKSPACE/ios.log"
+
+      - name: Create Xcode project
+        run: |
+          set -o pipefail
+          mkdir -p app
+          cp main.py assistant.py assistant_screen.py database.py editors.py models.py pickers.py screens.py ui_kit.py widget_sync.py app/
+          cd ios-toolchain
+          rm -rf nexuscalendar-ios
+          toolchain create NexusCalendar "$GITHUB_WORKSPACE/app" 2>&1 | tee -a "$GITHUB_WORKSPACE/ios.log"
+          PL=nexuscalendar-ios/nexuscalendar-Info.plist
+          PB=/usr/libexec/PlistBuddy
+          $PB -c "Set :CFBundleDisplayName 'NEXUS Calendar'" "$PL"
+          $PB -c "Set :CFBundleIdentifier org.nexus.calendar" "$PL"
+          $PB -c "Add :UIFileSharingEnabled bool true" "$PL" || $PB -c "Set :UIFileSharingEnabled true" "$PL"
+          $PB -c "Add :LSSupportsOpeningDocumentsInPlace bool true" "$PL" || true
+          $PB -c "Delete :UISupportedInterfaceOrientations" "$PL" || true
+          $PB -c "Add :UISupportedInterfaceOrientations array" "$PL"
+          $PB -c "Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait" "$PL"
+          $PB -c "Print" "$PL" | head -40 | tee -a "$GITHUB_WORKSPACE/ios.log"
+
+      - name: Build app (no signing)
+        run: |
+          set -o pipefail
+          cd ios-toolchain
+          xcodebuild -list -project nexuscalendar-ios/nexuscalendar.xcodeproj 2>&1 | tee -a "$GITHUB_WORKSPACE/ios.log"
+          xcodebuild -project nexuscalendar-ios/nexuscalendar.xcodeproj -scheme nexuscalendar \
+            -configuration Release -sdk iphoneos -arch arm64 -derivedDataPath xbuild \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            2>&1 | tee -a "$GITHUB_WORKSPACE/ios.log"
+
+      - name: Package IPA
+        run: |
+          cd ios-toolchain
+          APP=$(find xbuild/Build/Products -maxdepth 3 -name "*.app" | head -1)
+          echo "APP=$APP" | tee -a "$GITHUB_WORKSPACE/ios.log"
+          rm -rf Payload && mkdir Payload && cp -R "$APP" Payload/
+          zip -qry "$GITHUB_WORKSPACE/NEXUS_Calendar.ipa" Payload
+          ls -la "$GITHUB_WORKSPACE/NEXUS_Calendar.ipa" | tee -a "$GITHUB_WORKSPACE/ios.log"
+
+      - name: Publish IPA as GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete ios-latest -y --cleanup-tag || true
+          gh release create ios-latest NEXUS_Calendar.ipa --title "NEXUS Calendar IPA (iOS, без подписи)" \
+            --notes "Файл без подписи Apple: установка через Sideloadly или AltStore. Инструкция в README."
+
+      - name: Save log to branch ios-build-log
+        if: always()
+        run: |
+          mkdir -p /tmp/logout
+          tail -n 300 ios.log > /tmp/logout/ios-log.txt || echo "no log" > /tmp/logout/ios-log.txt
+          cd /tmp/logout
+          git init -q
+          git config user.email "ci@nexus.local"
+          git config user.name "ci"
+          git add ios-log.txt
+          git commit -qm "ios build log"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:refs/heads/ios-build-log
