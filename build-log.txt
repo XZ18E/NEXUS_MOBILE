@@ -1,0 +1,233 @@
+[0m[1;34m# Ensure build layout[0m
+[0m[1;30m# Create directory /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/bin[0m
+[0m[1;34m# Check configuration tokens[0m
+[0m[1;34m# Preparing build[0m
+[0m[1;34m# Check requirements for android[0m
+[0m[1;30m# Search for Git (git)[0m
+[0m[1;30m#  -> found at /usr/bin/git[0m
+[0m[1;30m# Search for Cython (cython)[0m
+[0m[1;30m#  -> found at /opt/hostedtoolcache/Python/3.11.18/x64/bin/cython[0m
+[0m[1;30m# Search for Java compiler (javac)[0m
+[0m[1;30m#  -> found at /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64/bin/javac[0m
+[0m[1;30m# Search for Java keytool (keytool)[0m
+[0m[1;30m#  -> found at /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64/bin/keytool[0m
+[0m[1;34m# Install platform[0m
+[0m[1;30m# Run 'git config --get remote.origin.url' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+https://github.com/kivy/python-for-android.git
+[0m[1;30m# Run 'git branch -vv' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+* (no branch) 957a3e5f Merge pull request #2959 from kivy/release-2024.01.21
+Cloning into 'python-for-android'...
+Note: switching to '957a3e5f8c270f7aa648ba185e5a68c1077a798d'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+[WARNING]: prerequisites.py is experimental and does not support all prerequisites yet.
+[WARNING]: Please report any issues to the python-for-android issue tracker.
+[WARNING]: prerequisites.py is experimental and does not support all prerequisites yet.
+[WARNING]: Please report any issues to the python-for-android issue tracker.
+[1m[INFO][0m:    Recipe kivy: version "2.3.0" requested
+[1m[INFO][0m:    Will compile for the following archs: arm64-v8a, armeabi-v7a
+[1m[INFO][0m:    Found Android API target in $ANDROIDAPI: 33
+[1m[INFO][0m:    Available Android APIs are (33)
+[1m[INFO][0m:    Requested API target 33 is available, continuing.
+[1m[INFO][0m:    Found NDK dir in $ANDROIDNDK: /home/runner/.buildozer/android/platform/android-ndk-r25b
+[1m[INFO][0m:    Found NDK version 25b
+[1m[INFO][0m:    Getting NDK API version (i.e. minimum supported API) from user argument
+[1m[INFO][0m:    ccache is missing, the build will not be optimized in the future.
+[1m[90m[DEBUG][39m[0m:   All possible dists: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching name and arch: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching ndk_api and recipe: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[INFO][0m:    Of the existing distributions, the following meet the given requirements:
+[1m[INFO][0m:    	[32m[1mnexuscalendar[0m: min API 24, includes recipes ([32mhostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3[0m), built for archs ([34marmeabi-v7a, arm64-v8a[0m)
+[1m[INFO][0m:    [1m[94mnexuscalendar has compatible recipes, using this one[0m
+[WARNING]: prerequisites.py is experimental and does not support all prerequisites yet.
+[WARNING]: Please report any issues to the python-for-android issue tracker.
+[WARNING]: prerequisites.py is experimental and does not support all prerequisites yet.
+[WARNING]: Please report any issues to the python-for-android issue tracker.
+[1m[INFO][0m:    Will compile for the following archs: armeabi-v7a, arm64-v8a
+[1m[INFO][0m:    Found Android API target in $ANDROIDAPI: 33
+[1m[INFO][0m:    Available Android APIs are (33)
+[1m[INFO][0m:    Requested API target 33 is available, continuing.
+[1m[INFO][0m:    Found NDK dir in $ANDROIDNDK: /home/runner/.buildozer/android/platform/android-ndk-r25b
+[1m[INFO][0m:    Found NDK version 25b
+[1m[INFO][0m:    Getting NDK API version (i.e. minimum supported API) from user argument
+[1m[INFO][0m:    ccache is missing, the build will not be optimized in the future.
+[1m[90m[DEBUG][39m[0m:   All possible dists: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching name and arch: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching ndk_api and recipe: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[INFO][0m:    Of the existing distributions, the following meet the given requirements:
+[1m[INFO][0m:    	[32m[1mnexuscalendar[0m: min API 24, includes recipes ([32mhostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3[0m), built for archs ([34marmeabi-v7a, arm64-v8a[0m)
+[1m[INFO][0m:    [1m[94mnexuscalendar has compatible recipes, using this one[0m
+[1m[90m[DEBUG][39m[0m:   All possible dists: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching name and arch: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching ndk_api and recipe: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[INFO][0m:    Of the existing distributions, the following meet the given requirements:
+[1m[INFO][0m:    	[32m[1mnexuscalendar[0m: min API 24, includes recipes ([32mhostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3[0m), built for archs ([34marmeabi-v7a, arm64-v8a[0m)
+[1m[INFO][0m:    [1m[94mnexuscalendar has compatible recipes, using this one[0m
+[1m[INFO][0m:    [36m-> directory context /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/bootstrap_builds/sdl2[39m
+[1m[INFO][0m:    [36m<- directory context /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[39m
+[1m[INFO][0m:    [36m-> directory context /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/nexuscalendar[39m
+[1m[90m[DEBUG][39m[0m:   Remove directory and subdirectory src/main/assets
+[1m[90m[DEBUG][39m[0m:   Create directory src/main/assets
+[0m[1;34m# Detected old url/branch (https://github.com/kivy/python-for-android.git/(no), deleting...[0m
+[0m[1;30m# Remove directory and subdirectory /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+[0m[1;30m# Run 'git clone -b v2024.01.21 --single-branch https://github.com/kivy/python-for-android.git python-for-android' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform[0m
+[0m[1;30m# Run '/opt/hostedtoolcache/Python/3.11.18/x64/bin/python -m pip install -q --user appdirs colorama>=0.3.3 jinja2 sh>=1.10, <2.0; sys_platform!="win32" build toml packaging setuptools' ...[0m
+[0m[1;30m# Cwd None[0m
+[0m[1;34m# Apache ANT found at /home/runner/.buildozer/android/platform/apache-ant-1.9.4[0m
+[0m[1;34m# Android SDK found at /home/runner/.buildozer/android/platform/android-sdk[0m
+[0m[1;34m# Recommended android's NDK version by p4a is: 25b[0m
+[0m[1;34m# Android NDK found at /home/runner/.buildozer/android/platform/android-ndk-r25b[0m
+[0m[1;30m# Run '/opt/hostedtoolcache/Python/3.11.18/x64/bin/python -m pythonforandroid.toolchain aab -h --color=always --storage-dir=/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a --ndk-api=24 --ignore-setup-py --debug' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+[0m[1;34m# Check application requirements[0m
+[0m[1;34m# Compile platform[0m
+[0m[1;30m# Run '/opt/hostedtoolcache/Python/3.11.18/x64/bin/python -m pythonforandroid.toolchain create --dist_name=nexuscalendar --bootstrap=sdl2 --requirements=python3,kivy==2.3.0,plyer,sqlite3,pyjnius --arch=arm64-v8a --arch=armeabi-v7a --copy-libs --color=always --storage-dir=/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a --ndk-api=24 --ignore-setup-py --debug' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+[0m[1;34m# Build the application #2[0m
+[0m[1;30m# Copy application source from /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE[0m
+[0m[1;30m# Remove directory and subdirectory /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app[0m
+[0m[1;30m# Create directory /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/assistant_screen.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/assistant_screen.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/database.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/database.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/screens.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/screens.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/models.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/models.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/ui_kit.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/ui_kit.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/editors.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/editors.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/main.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/main.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/pickers.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/pickers.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/assistant.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/assistant.py[0m
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget_sync.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/widget_sync.py[0m
+[0m[1;30m# copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/applibs to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/_applibs[0m
+[0m[1;30m# Copy /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/buildozer/sitecustomize.py to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/sitecustomize.py[0m
+[0m[1;34m# Package the application[0m
+[0m[1;30m# project.properties updated[0m
+[0m[1;30m# Run '/opt/hostedtoolcache/Python/3.11.18/x64/bin/python -m pythonforandroid.toolchain apk --bootstrap sdl2 --dist_name nexuscalendar --name NEXUS Calendar --version 1.0.0 --package org.nexus.nexuscalendar --minsdk 24 --ndk-api 24 --private /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app --permission POST_NOTIFICATIONS --android-entrypoint org.kivy.android.PythonActivity --android-apptheme @android:style/Theme.NoTitleBar --orientation portrait --window --enable-androidx --intent-filters /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget/intent_filters.xml --copy-libs --add-source /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget/java --add-resource /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget/res/layout:layout --add-resource /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget/res/drawable:drawable --add-resource /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/widget/res/xml:xml --arch arm64-v8a --arch armeabi-v7a --color=always --storage-dir=/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a --ndk-api=24 --ignore-setup-py --debug' ...[0m
+[0m[1;30m# Cwd /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[0m
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/assistant_screen.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/database.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/screens.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/models.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/ui_kit.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/sitecustomize.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/editors.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/main.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/pickers.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/assistant.py'...
+Compiling '/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/app/widget_sync.py'...
+[1m[90m[DEBUG][39m[0m:   Remove directory and subdirectory /tmp/p4a-extra-env-2imej78v
+[1m[90m[DEBUG][39m[0m:   Remove directory and subdirectory src/main/res
+[1m[INFO][0m:    Detected highest available build tools version to be 37.0.0
+stty: 'standard input': Inappropriate ioctl for device
+[1m[90m[DEBUG][39m[0m:   [90m->[0m running gradlew clean assembleDebug[0m
+[1m[90m[DEBUG][39m[0m:   	Downloading https://services.gradle.org/distributions/gradle-8.0.2-all.zip
+[1m[90m[DEBUG][39m[0m:   	...............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+[1m[90m[DEBUG][39m[0m:   	Unzipping /home/runner/.gradle/wrapper/dists/gradle-8.0.2-all/14bt34ptcsg1ikmfn78tdh1keu/gradle-8.0.2-all.zip to /home/runner/.gradle/wrapper/dists/gradle-8.0.2-all/14bt34ptcsg1ikmfn78tdh1keu
+[1m[90m[DEBUG][39m[0m:   	Set executable permissions for: /home/runner/.gradle/wrapper/dists/gradle-8.0.2-all/14bt34ptcsg1ikmfn78tdh1keu/gradle-8.0.2/bin/gradle
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	Welcome to Gradle 8.0.2!
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	Here are the highlights of this release:
+[1m[90m[DEBUG][39m[0m:   	 - Improvements to the Kotlin DSL
+[1m[90m[DEBUG][39m[0m:   	 - Fine-grained parallelism from the first build with configuration cache
+[1m[90m[DEBUG][39m[0m:   	 - Configurable Gradle user home cache cleanup
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	For more details see https://docs.gradle.org/8.0.2/release-notes.html
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	Starting a Gradle Daemon (subsequent builds will be faster)
+[1m[90m[DEBUG][39m[0m:   	> Task :clean
+[1m[90m[DEBUG][39m[0m:   	> Task :preBuild UP-TO-DATE
+[1m[90m[DEBUG][39m[0m:   	> Task :preDebugBuild UP-TO-DATE
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugNativeDebugMetadata NO-SOURCE
+[1m[90m[DEBUG][39m[0m:   	> Task :checkDebugAarMetadata
+[1m[90m[DEBUG][39m[0m:   	> Task :javaPreCompileDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :generateDebugResValues
+[1m[90m[DEBUG][39m[0m:   	> Task :mapDebugSourceSetPaths
+[1m[90m[DEBUG][39m[0m:   	> Task :generateDebugResources
+[1m[90m[DEBUG][39m[0m:   	> Task :packageDebugResources
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugResources
+[1m[90m[DEBUG][39m[0m:   	> Task :createDebugCompatibleScreenManifests
+[1m[90m[DEBUG][39m[0m:   	> Task :extractDeepLinksDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :parseDebugLocalResources
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	> Task :processDebugMainManifest
+[1m[90m[DEBUG][39m[0m:   	/home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/nexuscalendar/src/main/AndroidManifest.xml:55:18-50 Warning:
+[1m[90m[DEBUG][39m[0m:   		android:extractNativeLibs should not be specified in this source AndroidManifest.xml file. See https://d.android.com/guide/topics/manifest/application-element#extractNativeLibs for more information.
+[1m[90m[DEBUG][39m[0m:   	The AGP Upgrade Assistant can remove the attribute from the AndroidManifest.xml file and update the build file accordingly. See https://d.android.com/studio/build/agp-upgrade-assistant for more information.
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	> Task :processDebugManifest
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugShaders
+[1m[90m[DEBUG][39m[0m:   	> Task :compileDebugShaders NO-SOURCE
+[1m[90m[DEBUG][39m[0m:   	> Task :generateDebugAssets UP-TO-DATE
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugAssets
+[1m[90m[DEBUG][39m[0m:   	> Task :processDebugJavaRes NO-SOURCE
+[1m[90m[DEBUG][39m[0m:   	> Task :compressDebugAssets
+[1m[90m[DEBUG][39m[0m:   	> Task :processDebugManifestForPackage
+[1m[90m[DEBUG][39m[0m:   	> Task :checkDebugDuplicateClasses
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugJavaResource
+[1m[90m[DEBUG][39m[0m:   	> Task :desugarDebugFileDependencies
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeExtDexDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeLibDexDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugJniLibFolders
+[1m[90m[DEBUG][39m[0m:   	> Task :processDebugResources
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeDebugNativeLibs
+[1m[90m[DEBUG][39m[0m:   	> Task :validateSigningDebug
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	> Task :compileDebugJavaWithJavac
+[1m[90m[DEBUG][39m[0m:   	Note: Some input files use or override a deprecated API.
+[1m[90m[DEBUG][39m[0m:   	Note: Recompile with -Xlint:deprecation for details.
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	> Task :dexBuilderDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :writeDebugAppMetadata
+[1m[90m[DEBUG][39m[0m:   	> Task :writeDebugSigningConfigVersions
+[1m[90m[DEBUG][39m[0m:   	> Task :mergeProjectDexDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :stripDebugDebugSymbols
+[1m[90m[DEBUG][39m[0m:   	> Task :packageDebug
+[1m[90m[DEBUG][39m[0m:   	> Task :createDebugApkListingFileRedirect
+[1m[90m[DEBUG][39m[0m:   	> Task :assembleDebug
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	See https://docs.gradle.org/8.0.2/userguide/command_line_interface.html#sec:command_line_warnings
+[1m[90m[DEBUG][39m[0m:   	
+[1m[90m[DEBUG][39m[0m:   	BUILD SUCCESSFUL in 42s
+[1m[90m[DEBUG][39m[0m:   	33 actionable tasks: 33 executed
+[1m[INFO][0m:    [36m<- directory context /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/python-for-android[39m
+[1m[90m[DEBUG][39m[0m:   All possible dists: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching name and arch: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[90m[DEBUG][39m[0m:   Dist matching ndk_api and recipe: [<Distribution: name nexuscalendar with recipes (hostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3)>]
+[1m[INFO][0m:    Of the existing distributions, the following meet the given requirements:
+[1m[INFO][0m:    	[32m[1mnexuscalendar[0m: min API 24, includes recipes ([32mhostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, six, pyjnius, android, kivy, plyer, chardet, idna, certifi, requests, urllib3[0m), built for archs ([34marmeabi-v7a, arm64-v8a[0m)
+[1m[INFO][0m:    [1m[94mnexuscalendar has compatible recipes, using this one[0m
+[1m[INFO][0m:    [1m[32m# Copying android package to current directory[0m[39m
+[1m[INFO][0m:    [1m[32m# Android package filename not found in build output. Guessing...[0m[39m
+[1m[INFO][0m:    [1m[32m# Found android package file: /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/nexuscalendar/build/outputs/apk/debug/nexuscalendar-debug.apk[0m[39m
+[1m[INFO][0m:    # Add version number to android package
+[1m[INFO][0m:    # Android package renamed to nexuscalendar-debug-1.0.0.apk
+stty: 'standard input': Inappropriate ioctl for device
+[1m[90m[DEBUG][39m[0m:   [90m->[0m running cp /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/nexuscalendar/build/outputs/apk/debug/nexuscalendar-debug.apk nexuscalendar-debug-1.0.0.apk[0m
+No setup.py/pyproject.toml used, copying full private data into .apk.
+Applying Java source code patches...
+Applying patch: src/patches/SDLActivity.java.patch
+Warning: failed to apply patch (exit code 1), assuming it is already applied:  src/patches/SDLActivity.java.patch
+[0m[1;30m# Copy /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/nexuscalendar/build/outputs/apk/debug/nexuscalendar-debug.apk to /home/runner/work/NEXUS_MOBILE/NEXUS_MOBILE/bin/nexuscalendar-1.0.0-arm64-v8a_armeabi-v7a-debug.apk[0m
+[0m[1;34m# Android packaging done![0m
+[0m[1;34m# APK nexuscalendar-1.0.0-arm64-v8a_armeabi-v7a-debug.apk available in the bin directory[0m
